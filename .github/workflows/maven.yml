@@ -15,7 +15,7 @@ on:
     inputs:
       browsername:
         type: string
-        description: 'browser name'
+        description: 'Browser name'
         default: 'chrome'
       testname:
         type: string
