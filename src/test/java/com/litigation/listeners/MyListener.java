@@ -6,9 +6,14 @@ import com.aventstack.extentreports.Status;
 import com.litigation.driverManager.DriverManager;
 import com.litigation.utilities.Log;
 import com.litigation.utilities.UIControls;
+import io.qameta.allure.Allure;
+import org.apache.commons.io.FileUtils;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+
+import java.io.File;
+import java.io.IOException;
 
 public class MyListener implements ITestListener {
     UIControls uiControls = new UIControls();
@@ -25,7 +30,13 @@ public class MyListener implements ITestListener {
             //extentTest=extentReports.createTest(result.getMethod().getMethodName());
             //uiControls = new UIControls();
             String screenshotpath=uiControls.getScreenshot(DriverManager.getInstance().getDriver(),result.getMethod().getMethodName());
+            File fii=new File(screenshotpath);
             extentTest.addScreenCaptureFromPath(screenshotpath);
+            try {
+                Allure.addAttachment("screenshot fii", FileUtils.openInputStream(fii));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

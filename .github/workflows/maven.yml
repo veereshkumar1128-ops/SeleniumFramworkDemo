@@ -47,7 +47,7 @@ jobs:
       if: ${{ inputs.xmlname }}
       run: >
         mvn clean test
-        -DsuiteXmlFiles=${{ inputs.xmlname }}
+        -DsuiteXmlFile=${{ inputs.xmlname }}
         -Dmaven.test.failure.ignore=true
     - name: Build with maven
       if: ${{inputs.testname}}

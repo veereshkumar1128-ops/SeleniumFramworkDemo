@@ -10,8 +10,12 @@ import com.litigation.utilities.ExtentReportManager;
 import com.litigation.utilities.Log;
 import com.litigation.utilities.ReadProperties;
 import com.litigation.utilities.UIControls;
+import io.qameta.allure.Allure;
+import org.apache.commons.io.FileUtils;
 import org.testng.annotations.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Driver;
 import java.time.Duration;
 
@@ -32,7 +36,12 @@ public class LoginPageTest extends BaseClass {
         loginPage.enterpassword();
         extentTest.log(Status.PASS, extentTest.addScreenCaptureFromPath(screenshotpath).toString());
         extentTest.log(Status.INFO, "Entered Password for testLogin");
-
+        File fi= new File(screenshotpath);
+        try {
+            Allure.addAttachment("screenshot", FileUtils.openInputStream(fi));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         extentTest.log(Status.PASS, extentTest.addScreenCaptureFromPath(screenshotpath).toString());
         loginPage.clicklogin();
         extentTest.log(Status.INFO, "Clicked Login for testLogin");
@@ -46,7 +55,14 @@ public class LoginPageTest extends BaseClass {
         loginPage.enterpassword();
         extentTest.log(Status.INFO, "Entered Password for testLogin");
         String screenshotpath=uiControls.getScreenshot(DriverManager.getInstance().getDriver(),"logintest");
-        extentTest.log(Status.PASS, extentTest.addScreenCaptureFromPath(screenshotpath).toString());
+
+        File f = new File(screenshotpath);
+    extentTest.log(Status.PASS, extentTest.addScreenCaptureFromPath(screenshotpath).toString());
+        try {
+            Allure.addAttachment("screenshot", FileUtils.openInputStream(f));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         loginPage.clicklogin();
         extentTest.log(Status.INFO, "Clicked Login for testLogin");
     }
